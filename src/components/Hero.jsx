@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import heroVideo from '../assets/Investor_Deck_0.mp4'
 
 const ROLES = ['Graphic Designer', 'Art Director', 'Visual Storyteller', 'Brand Builder']
 
@@ -82,8 +81,9 @@ export default function Hero() {
         muted
         loop
         playsInline
-        className="hero-video absolute inset-0 w-full h-full object-cover pointer-events-none z-0"
-        src={heroVideo}
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none z-0 opacity-20 scale-105"
+        style={{ filter: 'grayscale(100%) contrast(1.15) brightness(0.65)' }}
+        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260207_050933_33e2620d-09cd-43a2-80ef-4cdbb42f4194.mp4"
       />
       <motion.div
         className="hero-bg-text"
