@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import portrait from '../assets/alvin_portrait.png'
+import portrait from '../assets/profile.jpeg'
 
 const SKILLS = [
   'Brand Identity', 'Typography', 'Editorial Design', 'Art Direction',
