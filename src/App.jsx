@@ -6,7 +6,7 @@ import About from './components/About.jsx'
 import PressStrip from './components/PressStrip.jsx'
 import ScrollWords from './components/ScrollWords.jsx'
 import Works from './components/Works.jsx'
-import Chess from './components/Chess.jsx'
+
 import Capabilities from './components/Capabilities.jsx'
 import Marquee from './components/Marquee.jsx'
 
@@ -23,7 +23,7 @@ export default function App() {
         <PressStrip />
         <ScrollWords />
         <Works />
-        <Chess />
+
         <Capabilities />
         <Marquee />
       </div>

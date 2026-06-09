@@ -66,7 +66,7 @@ export default function About() {
           {...reveal(0.1)}
           style={{ transform: `translateY(${portraitShift}px)` }}
         >
-          <img className="about-portrait" src={portrait} alt="Brian Mwangi" />
+          <img className="about-portrait" src={portrait} alt="Alvin Kyalo" />
           <span className="about-sig">— Alvin Kyalo</span>
         </motion.div>
 
