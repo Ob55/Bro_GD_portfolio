@@ -844,7 +844,7 @@ img, video { display: block; max-width: 100%; }
   width: clamp(300px, 38vw, 520px);
   height: clamp(380px, 48vw, 660px);
   object-fit: cover;
-  filter: saturate(0.55) brightness(0.92) sepia(0.22) contrast(1.05);
+  filter: saturate(0.8) brightness(1.08) sepia(0.05) contrast(1.1);
   box-shadow: 0 30px 100px rgba(0, 0, 0, 0.55),
               0 0 0 1px rgba(245, 237, 224, 0.06);
   border-radius: 53% 47% 38% 62% / 50% 35% 65% 50%;
