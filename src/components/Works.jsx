@@ -21,56 +21,5 @@ const WORKS = [
 ]
 
 export default function Works() {
-  return (
-    <section className="works" id="work">
-      <div className="works-head">
-        <motion.div
-          initial={{ y: 30, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.8, ease: [0.2, 0.7, 0.3, 1] }}
-        >
-          <div className="section-eyebrow">Selected Work</div>
-          <h2 className="section-heading">Selected <em>Work</em></h2>
-        </motion.div>
-        <motion.a
-          href="#cases" className="view-all"
-          initial={{ y: 20, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.7, delay: 0.15 }}
-        >
-          Read the stories <span>→</span>
-        </motion.a>
-      </div>
-
-      <div className="works-grid five">
-        {WORKS.map((w, i) => (
-          <motion.div
-            key={w.mark}
-            className="work-card"
-            initial={{ y: 40, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.7, delay: i * 0.08, ease: [0.2, 0.7, 0.3, 1] }}
-          >
-            <div
-              className="work-thumb"
-              data-mark={w.mark}
-              style={{
-                backgroundImage: `${w.grad}, url(${w.img})`,
-                backgroundBlendMode: 'multiply',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-              }}
-            />
-            <div className="work-meta">
-              <span>{w.mark}</span><span>·</span><span>{w.kind}</span>
-            </div>
-            <h3 className="work-title">{w.title}</h3>
-          </motion.div>
-        ))}
-      </div>
-    </section>
-  )
+  return null
 }
