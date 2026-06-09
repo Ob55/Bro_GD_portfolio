@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import loaderVideo from '../assets/Investor_Deck_0.mp4'
 
 const WORDS = ['Identity', 'Concept', 'Editorial', 'Elevate']
 const DURATION = 2700
@@ -36,6 +37,14 @@ export default function Loader({ onComplete }) {
       transition={{ duration: 0.6 }}
       style={{ pointerEvents: hide ? 'none' : 'auto' }}
     >
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="loader-video"
+        src={loaderVideo}
+      />
       <motion.div
         className="loader-label"
         initial={{ y: -20, opacity: 0 }}
