@@ -53,30 +53,46 @@ export default function Experience() {
   })
 
   return (
-    <section className="exp" id="experience">
-      <div className="exp-head">
-        <motion.div className="exp-eyebrow" {...reveal(0)}>
-          <span className="exp-eyebrow-line" />
+    <section className="xp" id="experience">
+      <div className="xp-head">
+        <motion.div className="xp-eyebrow" {...reveal(0)}>
+          <span className="xp-eyebrow-line" />
           Experience
         </motion.div>
-        <motion.h2 className="exp-heading" {...reveal(0.08)}>
+        <motion.h2 className="xp-heading" {...reveal(0.08)}>
           Selected roles &amp; <em>impact</em>.
         </motion.h2>
       </div>
 
-      <div className="exp-list">
+      <div className="xp-timeline">
+        {/* Animated spine that draws on scroll */}
+        <motion.span
+          className="xp-spine"
+          initial={{ scaleY: 0 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={{ once: true, margin: '-120px' }}
+          transition={{ duration: 1.1, ease: [0.2, 0.7, 0.3, 1] }}
+        />
+
         {ROLES.map((r, i) => (
-          <motion.article className="exp-row" key={r.org + r.role} {...reveal(0.1 + i * 0.06)}>
-            <div className="exp-row-period">{r.period}</div>
-            <div className="exp-row-main">
-              <h3 className="exp-row-role">
-                {r.role} <span className="exp-row-org">— {r.org}</span>
-              </h3>
-              <span className="exp-row-place">{r.place}</span>
-              <p className="exp-row-note">{r.note}</p>
-              <div className="exp-row-tags">
+          <motion.article className="xp-item" key={r.org + r.role} {...reveal(0.12 + i * 0.07)}>
+            <div className="xp-node">
+              <span className="xp-index">{String(i + 1).padStart(2, '0')}</span>
+              <span className="xp-dot" />
+            </div>
+
+            <div className="xp-card">
+              <div className="xp-card-top">
+                <h3 className="xp-role">
+                  {r.role} <span className="xp-org">— {r.org}</span>
+                </h3>
+                <span className="xp-period">{r.period}</span>
+              </div>
+              <span className="xp-place">{r.place}</span>
+              <p className="xp-note">{r.note}</p>
+              <div className="xp-tags">
                 {r.tags.map((t) => (
-                  <span className="exp-tag" key={t}>{t}</span>
+                  <span className="xp-tag" key={t}>{t}</span>
                 ))}
               </div>
             </div>
@@ -84,13 +100,13 @@ export default function Experience() {
         ))}
       </div>
 
-      {/* Small dedicated Education block */}
-      <motion.div className="exp-edu" {...reveal(0.42)}>
-        <span className="exp-edu-l">Education</span>
-        <div className="exp-edu-body">
-          <span className="exp-edu-v">Zetech University — Software Engineering / AI</span>
-          <span className="exp-edu-meta">Nairobi · 2023 – 2025</span>
-          <p className="exp-edu-note">
+      {/* Education — distinct card */}
+      <motion.div className="xp-edu" {...reveal(0.3)}>
+        <span className="xp-edu-l">Education</span>
+        <div className="xp-edu-body">
+          <span className="xp-edu-v">Zetech University — Software Engineering / AI</span>
+          <span className="xp-edu-meta">Nairobi · 2023 – 2025</span>
+          <p className="xp-edu-note">
             Coursework across full-stack web development (HTML, CSS, JavaScript, Python, PHP, SQL),
             database systems, algorithms, software testing, and AI / machine learning.
           </p>
