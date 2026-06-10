@@ -21,24 +21,10 @@ const sortedImages = Object.entries(modules)
     return a.name.localeCompare(b.name)
   })
 
-// The OPPO Reno launch ad is image "15"; pull it to the front as the live campaign.
-// Optional friendly titles for a few recognisable pieces (everything else stays generic).
-const TITLES = {
-  '15': 'OPPO Reno13F 5G',
-  '3': 'Fashion Promo',
-  '5': 'Juice Burst',
-  '6': 'Protein Powder',
-  '1': 'Daxin',
-}
-const oppo = sortedImages.find((img) => img.name === '15')
-const rest = sortedImages.filter((img) => img.name !== '15')
-const ordered = oppo ? [oppo, ...rest] : sortedImages
-
-const projects = ordered.map((img, i) => ({
+const projects = sortedImages.map((img, i) => ({
   ...img,
-  title: TITLES[img.name] || (i === 0 ? 'OPPO Kenya Campaign' : `Selected Work ${String(i + 1).padStart(2, '0')}`),
-  label: i === 0 ? 'Live Campaign · OPPO Kenya' : 'Personal Project',
-  featured: i === 0,
+  title: `Selected Work ${String(i + 1).padStart(2, '0')}`,
+  label: 'Personal Project',
 }))
 
 // Duplicate the set so the marquee can loop seamlessly.
@@ -124,12 +110,11 @@ export default function Works() {
             return (
               <article
                 key={`${p.name}-${idx}`}
-                className={`hw-card ${p.featured ? 'hw-card-featured' : ''}`}
+                className="hw-card"
                 onClick={() => setActiveIdx(realIdx)}
               >
                 <div className="hw-card-media">
                   <img className="hw-card-img" src={p.src} alt={p.title} draggable="false" loading="lazy" />
-                  {p.featured && <span className="hw-card-badge">Live Campaign</span>}
                   <span className="hw-card-expand" aria-hidden>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                       <line x1="7" y1="17" x2="17" y2="7" />

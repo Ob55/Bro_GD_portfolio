@@ -22,9 +22,9 @@ export default function App() {
         <Hero />
         <About />
         <ScrollWords />
+        <Experience />
         <Works />
         <Capabilities />
-        <Experience />
         <Marquee />
         <Contact />
         <Footer />
