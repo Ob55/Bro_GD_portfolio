@@ -4,7 +4,7 @@ const LINKS = [
   { id: 'hero', label: 'Home' },
   { id: 'about', label: 'About' },
   { id: 'work', label: 'Work' },
-  { id: 'cap', label: 'More' },
+  { id: 'contact', label: 'Contact' },
 ]
 
 export default function Nav() {
@@ -42,6 +42,11 @@ export default function Nav() {
             {l.label}
           </a>
         ))}
+        <div className="nav-divider" />
+        <span className="nav-badge">
+          <span className="nav-badge-dot" />
+          Available for Work
+        </span>
       </div>
     </nav>
   )

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 
 const TEXT =
-  "I operate at the seam of concept and form — building visual systems that feel permanent, deliberate, and quiet. I care about the geometry of a grid, the weight of a letterform, and the wealth of gold against obsidian."
-const ACCENT_WORDS = new Set(['concept', 'permanent,', 'wealth'])
+  "I believe great design doesn't just look good — it performs. I build brand visuals and campaign assets that stop the scroll, communicate instantly, and make audiences act. Every pixel is intentional. Every asset is built to convert."
+const ACCENT_WORDS = new Set(['performs.', 'stop', 'the', 'scroll,', 'convert.'])
 
 export default function ScrollWords() {
   const words = TEXT.split(' ')

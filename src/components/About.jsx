@@ -3,9 +3,9 @@ import { motion } from 'framer-motion'
 import portrait from '../assets/profile.jpeg'
 
 const SKILLS = [
-  'Brand Identity', 'Typography', 'Editorial Design', 'Art Direction',
-  'Packaging Design', 'Motion Graphics', 'Figma', 'Adobe CC',
-  'Webflow', 'Visual Strategy',
+  'Brand Identity', 'Social Media Design', 'Motion Graphics', 'Canva Pro',
+  'CapCut', 'Adobe CC', 'AI Creative Workflows', 'Art Direction',
+  'Visual Strategy',
 ]
 
 export default function About() {
@@ -57,7 +57,7 @@ export default function About() {
 
       <motion.div className="about-eyebrow-row" {...reveal(0)}>
         <span className="about-eyebrow">✱ &nbsp;About</span>
-        <span className="about-eyebrow-right">Designer · Art Director · Nairobi</span>
+        <span className="about-eyebrow-right">Designer · Social Media Creative · Art Director · Nairobi</span>
       </motion.div>
 
       <div className="about-grid">
@@ -77,14 +77,15 @@ export default function About() {
 
           <motion.div className="about-bio" {...reveal(0.25)}>
             <p>
-              A <strong>multi-disciplinary graphic designer</strong> and art director
-              based in Nairobi. I shape premium brand identities, editorial systems,
-              and packaging with detail-led craft, clarity, and strategic polish.
+              A <strong>multi-disciplinary graphic designer</strong> and creative
+              strategist based in Nairobi. I build brand visuals, social media content,
+              and campaign assets that drive real engagement — combining strong design
+              instincts with an AI-native workflow.
             </p>
             <p>
-              I work at the intersection of narrative, typography, and modern luxury.
-              Every project is driven by restraint, precision, and a timeless sense of
-              visual craft that makes brands feel both memorable and enduring.
+              I've worked with brands across social media, advertising, and on-camera
+              campaigns — including <strong>OPPO Kenya</strong>. Every project is driven
+              by clarity, consistency, and visuals that convert.
             </p>
           </motion.div>
 
@@ -125,11 +126,11 @@ export default function About() {
         </div>
         <div className="about-strip-item">
           <span className="about-strip-l">Focus</span>
-          <span className="about-strip-v">Luxury Branding</span>
+          <span className="about-strip-v">Social Media & Brand Creative</span>
         </div>
         <div className="about-strip-item">
           <span className="about-strip-l">Domain</span>
-          <span className="about-strip-v">Print & Digital</span>
+          <span className="about-strip-v">Digital & Social</span>
         </div>
         <div className="about-strip-item">
           <span className="about-strip-l">Philosophy</span>

@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-
-const ROLES = ['Graphic Designer', 'Art Director', 'Visual Storyteller', 'Brand Builder']
+import { motion } from 'framer-motion'
 
 function CountUp({ to, suffix = '', duration = 1400 }) {
   const ref = useRef(null)
@@ -34,13 +32,7 @@ function CountUp({ to, suffix = '', duration = 1400 }) {
 }
 
 export default function Hero() {
-  const [roleIdx, setRoleIdx] = useState(0)
   const ctaRef = useRef(null)
-
-  useEffect(() => {
-    const t = setInterval(() => setRoleIdx((i) => (i + 1) % ROLES.length), 2200)
-    return () => clearInterval(t)
-  }, [])
 
   // Magnetic CTA effect
   useEffect(() => {
@@ -99,7 +91,7 @@ export default function Hero() {
 
       <div className="hero-content">
         <motion.div className="hero-top" {...fade(0.45)}>
-          <span className="hero-eyebrow">Graphic Design · Art Direction · Nairobi</span>
+          <span className="hero-eyebrow">Graphic Design · Social Media Creative · Brand Identity · Nairobi</span>
         </motion.div>
 
         <div className="hero-name-wrap">
@@ -117,36 +109,23 @@ export default function Hero() {
             animate={{ opacity: 1, rotate: -12 }}
             transition={{ duration: 0.9, delay: 1.1 }}
           >
-            — art & form
+            — available for work
           </motion.span>
         </div>
 
         <motion.div className="hero-meta" {...fade(0.7)}>
           <p className="hero-role-line">
-            A&nbsp;
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={roleIdx}
-                className="hero-role"
-                initial={{ y: 12, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -12, opacity: 0 }}
-                transition={{ duration: 0.4 }}
-              >
-                {ROLES[roleIdx]}
-              </motion.span>
-            </AnimatePresence>
-            &nbsp;crafting premium visual systems, editorial stories, and brand identities
-            that feel refined, modern, and unmistakably crafted.
+            A <span className="hero-role-accent">Graphic Designer &amp; Creative Strategist</span> building
+            scroll-stopping brand visuals, social content, and campaign assets — for brands that want to be remembered.
           </p>
         </motion.div>
 
         <motion.div className="hero-ctas" {...fade(0.95)}>
           <a ref={ctaRef} href="#work" className="btn btn-primary">
-            Explore work
+            Explore Work
             <span className="btn-arrow">↗</span>
           </a>
-          <a href="#about" className="btn btn-outline">Discover more</a>
+          <a href="#contact" className="btn btn-outline">Download CV</a>
         </motion.div>
       </div>
 
@@ -156,10 +135,10 @@ export default function Hero() {
       </div>
 
       <div className="stats-strip" aria-hidden>
-        <div className="stat-cell"><span className="stat-num"><CountUp to={6} suffix="+" /></span><span className="stat-lbl">Years</span></div>
-        <div className="stat-cell"><span className="stat-num"><CountUp to={50} suffix="+" /></span><span className="stat-lbl">Brands Shaped</span></div>
-        <div className="stat-cell"><span className="stat-num"><CountUp to={25} /></span><span className="stat-lbl">Global Clients</span></div>
-        <div className="stat-cell"><span className="stat-num">Creative</span><span className="stat-lbl">Art Direction</span></div>
+        <div className="stat-cell"><span className="stat-num"><CountUp to={3} suffix="+" /></span><span className="stat-lbl">Years</span></div>
+        <div className="stat-cell"><span className="stat-num stat-num-text">Brands</span><span className="stat-lbl">Shaped</span></div>
+        <div className="stat-cell"><span className="stat-num stat-num-text">Clients</span><span className="stat-lbl">Served</span></div>
+        <div className="stat-cell"><span className="stat-num stat-num-text">Creative</span><span className="stat-lbl">Art Direction</span></div>
       </div>
     </section>
   )

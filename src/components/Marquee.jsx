@@ -1,10 +1,11 @@
 const PHRASES = [
-  'Concept to form',
   'Designed in Nairobi',
-  'Typographic detail',
-  'Luxury brand systems',
-  'Crafted with intent',
-  'Editorial precision',
+  'Social Media Creative',
+  'Brand Visuals',
+  'Campaign Assets',
+  'AI-Native Workflow',
+  'Scroll-Stopping Design',
+  'Built to Convert',
 ]
 
 export default function Marquee() {
