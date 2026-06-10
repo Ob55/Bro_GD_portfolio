@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 // Glob-import all images inside assets/GDIMAGE
@@ -41,9 +41,11 @@ const projects = ordered.map((img, i) => ({
   featured: i === 0,
 }))
 
+// Duplicate the set so the marquee can loop seamlessly.
+const loop = [...projects, ...projects]
+
 export default function Works() {
   const [activeIdx, setActiveIdx] = useState(null)
-  const trackRef = useRef(null)
 
   // Handle Keyboard Navigation for Lightbox
   useEffect(() => {
@@ -66,60 +68,6 @@ export default function Works() {
       document.body.style.overflow = ''
     }
   }, [activeIdx])
-
-  // Drag-to-scroll for the horizontal track
-  useEffect(() => {
-    const el = trackRef.current
-    if (!el) return
-    let isDown = false
-    let startX = 0
-    let startScroll = 0
-    let moved = false
-
-    const onDown = (e) => {
-      isDown = true
-      moved = false
-      startX = e.pageX - el.offsetLeft
-      startScroll = el.scrollLeft
-      el.classList.add('dragging')
-    }
-    const onMove = (e) => {
-      if (!isDown) return
-      const x = e.pageX - el.offsetLeft
-      const walk = x - startX
-      if (Math.abs(walk) > 4) moved = true
-      el.scrollLeft = startScroll - walk
-    }
-    const onUp = () => {
-      isDown = false
-      el.classList.remove('dragging')
-      // brief flag so the click handler can ignore drag-releases
-      el.dataset.dragged = moved ? '1' : ''
-    }
-
-    el.addEventListener('mousedown', onDown)
-    window.addEventListener('mousemove', onMove)
-    window.addEventListener('mouseup', onUp)
-    return () => {
-      el.removeEventListener('mousedown', onDown)
-      window.removeEventListener('mousemove', onMove)
-      window.removeEventListener('mouseup', onUp)
-    }
-  }, [])
-
-  const scrollByCards = useCallback((dir) => {
-    const el = trackRef.current
-    if (!el) return
-    const card = el.querySelector('.hw-card')
-    const amount = card ? card.offsetWidth + 28 : 400
-    el.scrollBy({ left: dir * amount * 1.4, behavior: 'smooth' })
-  }, [])
-
-  const openCard = (idx) => {
-    const el = trackRef.current
-    if (el && el.dataset.dragged === '1') return // was a drag, not a click
-    setActiveIdx(idx)
-  }
 
   const handlePrev = useCallback((e) => {
     e.stopPropagation()
@@ -147,7 +95,7 @@ export default function Works() {
             Portfolio
           </div>
           <h2 className="hw-title">
-            Selected<br /><em>Works</em>
+            The<br /><em>Reel</em>
           </h2>
         </motion.div>
 
@@ -161,49 +109,44 @@ export default function Works() {
           <p className="hw-subtitle">
             Brand content, social media campaigns, and ad creatives — built for real audiences and real results.
           </p>
-          <div className="hw-arrows">
-            <button className="hw-arrow" onClick={() => scrollByCards(-1)} aria-label="Scroll left">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="15 18 9 12 15 6" />
-              </svg>
-            </button>
-            <button className="hw-arrow" onClick={() => scrollByCards(1)} aria-label="Scroll right">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="9 18 15 12 9 6" />
-              </svg>
-            </button>
-          </div>
+          <span className="hw-scroll-note">
+            <span className="hw-scroll-arrows">←←←</span>
+            Auto-scrolling · hover to pause · click to expand
+          </span>
         </motion.div>
       </div>
 
-      {/* ── Horizontal Swipe Track ── */}
-      <div className="hw-track" ref={trackRef}>
-        {projects.map((p, idx) => (
-          <motion.article
-            key={p.name}
-            className={`hw-card ${p.featured ? 'hw-card-featured' : ''}`}
-            onClick={() => openCard(idx)}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.7, delay: Math.min(idx, 4) * 0.06, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="hw-card-media">
-              <img className="hw-card-img" src={p.src} alt={p.title} draggable="false" loading="lazy" />
-              {p.featured && <span className="hw-card-badge">Live Campaign</span>}
-              <span className="hw-card-expand" aria-hidden>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="7" y1="17" x2="17" y2="7" />
-                  <polyline points="7 7 17 7 17 17" />
-                </svg>
-              </span>
-            </div>
-            <div className="hw-card-meta">
-              <span className="hw-card-name">{p.title}</span>
-              <span className="hw-card-label">{p.label}</span>
-            </div>
-          </motion.article>
-        ))}
+      {/* ── Infinite Auto-Scrolling Reel ── */}
+      <div className="reel-viewport">
+        <div className="reel-track">
+          {loop.map((p, idx) => {
+            const realIdx = idx % projects.length
+            return (
+              <article
+                key={`${p.name}-${idx}`}
+                className={`hw-card ${p.featured ? 'hw-card-featured' : ''}`}
+                onClick={() => setActiveIdx(realIdx)}
+              >
+                <div className="hw-card-media">
+                  <img className="hw-card-img" src={p.src} alt={p.title} draggable="false" loading="lazy" />
+                  {p.featured && <span className="hw-card-badge">Live Campaign</span>}
+                  <span className="hw-card-expand" aria-hidden>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="7" y1="17" x2="17" y2="7" />
+                      <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                  </span>
+                </div>
+                <div className="hw-card-meta">
+                  <span className="hw-card-name">{p.title}</span>
+                  <span className="hw-card-label">{p.label}</span>
+                </div>
+              </article>
+            )
+          })}
+        </div>
+        <div className="reel-fade reel-fade-left" />
+        <div className="reel-fade reel-fade-right" />
       </div>
 
       {/* ── Fullscreen Lightbox ── */}
