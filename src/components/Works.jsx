@@ -23,8 +23,7 @@ const sortedImages = Object.entries(modules)
 
 const projects = sortedImages.map((img, i) => ({
   ...img,
-  title: `Selected Work ${String(i + 1).padStart(2, '0')}`,
-  label: 'Personal Project',
+  title: `Design ${String(i + 1).padStart(2, '0')}`,
 }))
 
 // Duplicate the set so the marquee can loop seamlessly.
@@ -122,10 +121,6 @@ export default function Works() {
                     </svg>
                   </span>
                 </div>
-                <div className="hw-card-meta">
-                  <span className="hw-card-name">{p.title}</span>
-                  <span className="hw-card-label">{p.label}</span>
-                </div>
               </article>
             )
           })}
@@ -204,8 +199,6 @@ export default function Works() {
                     {String(projects.length).padStart(2, '0')}
                   </span>
                 </div>
-
-                <span className="gd-lightbox-label">{projects[activeIdx].label}</span>
 
                 <span className="gd-lightbox-hint">
                   ESC to close · ← → to navigate
