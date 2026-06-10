@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import loaderVideo from '../assets/Investor_Deck_0.mp4'
 
 const WORDS = ['Identity', 'Concept', 'Editorial', 'Elevate']
-const DURATION = 2700
+const DURATION = 1600
 
 export default function Loader({ onComplete }) {
   const [count, setCount] = useState(0)

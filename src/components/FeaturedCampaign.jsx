@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import SpotlightReveal from './SpotlightReveal.jsx'
 // OPPO Reno launch creative (still) revealed over brand motion footage.
-import campaignStill from '../assets/GDIMAGE/15.png'
+import campaignStill from '../assets/GDIMAGE/15.webp'
 import campaignMotion from '../assets/Investor_Deck_0.mp4'
 
 export default function FeaturedCampaign() {

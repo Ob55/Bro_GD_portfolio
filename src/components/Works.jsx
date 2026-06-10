@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 // Glob-import all images inside assets/GDIMAGE
-const modules = import.meta.glob('../assets/GDIMAGE/*.png', { eager: true })
+const modules = import.meta.glob('../assets/GDIMAGE/*.webp', { eager: true })
 
 // Parse and sort the images numerically so they appear in natural order (1, 2, 3...)
 const sortedImages = Object.entries(modules)
@@ -12,7 +12,7 @@ const sortedImages = Object.entries(modules)
     const num = match ? parseInt(match[1], 10) : 999
     return {
       src: mod.default,
-      name: filename.replace('.png', ''),
+      name: filename.replace('.webp', ''),
       num
     }
   })
