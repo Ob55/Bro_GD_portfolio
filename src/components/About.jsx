@@ -2,11 +2,22 @@ import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import portrait from '../assets/profile.jpeg'
 
-const SKILLS = [
-  'Brand Identity', 'Social Media Design', 'Motion Graphics', 'Canva Pro',
-  'CapCut', 'Adobe CC', 'AI Creative Workflows', 'Art Direction',
-  'Visual Strategy',
+// Detailed toolkit, grouped — sourced from the CV.
+const TOOLKIT = [
+  {
+    group: 'Design & Content',
+    items: ['Brand Identity', 'Social Media Design', 'Carousels & Stories', 'Ad Creative', 'Short-form Video', 'Motion Graphics'],
+  },
+  {
+    group: 'Tools',
+    items: ['Canva Pro', 'CapCut', 'Adobe CC', 'n8n', 'AI Image Tools'],
+  },
+  {
+    group: 'Strategy & Workflow',
+    items: ['AI Creative Workflows', 'Full-funnel Campaigns', 'Social Algorithm Strategy', 'Visual Storytelling', 'Art Direction'],
+  },
 ]
+const ALL_SKILLS = TOOLKIT.flatMap((g) => g.items)
 
 export default function About() {
   const sectionRef = useRef(null)
@@ -38,7 +49,7 @@ export default function About() {
 
   // Auto-cycling skill highlight
   useEffect(() => {
-    const t = setInterval(() => setHighlightIdx((i) => (i + 1) % SKILLS.length), 1400)
+    const t = setInterval(() => setHighlightIdx((i) => (i + 1) % ALL_SKILLS.length), 1400)
     return () => clearInterval(t)
   }, [])
 
@@ -92,24 +103,37 @@ export default function About() {
 
           <motion.div className="about-skills" {...reveal(0.35)}>
             <span className="about-skills-label">// Toolkit</span>
-            <div className="about-skills-list">
-              {SKILLS.map((s, i) => (
-                <motion.span
-                  key={s}
-                  className={`skill-pill ${i === highlightIdx ? 'on' : ''}`}
-                  initial={{ y: 16, opacity: 0 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  viewport={{ once: true, margin: '-50px' }}
-                  transition={{
-                    duration: 0.5,
-                    delay: 0.4 + i * 0.05,
-                    ease: [0.2, 0.7, 0.3, 1],
-                  }}
-                >
-                  <span className="skill-pill-dot" />
-                  {s}
-                </motion.span>
-              ))}
+            <div className="about-toolkit">
+              {TOOLKIT.map((cat, ci) => {
+                const offset = TOOLKIT.slice(0, ci).reduce((n, g) => n + g.items.length, 0)
+                return (
+                  <div className="about-toolkit-cat" key={cat.group}>
+                    <span className="about-toolkit-cat-label">{cat.group}</span>
+                    <div className="about-skills-list">
+                      {cat.items.map((s, i) => {
+                        const flatIdx = offset + i
+                        return (
+                          <motion.span
+                            key={s}
+                            className={`skill-pill ${flatIdx === highlightIdx ? 'on' : ''}`}
+                            initial={{ y: 16, opacity: 0 }}
+                            whileInView={{ y: 0, opacity: 1 }}
+                            viewport={{ once: true, margin: '-50px' }}
+                            transition={{
+                              duration: 0.5,
+                              delay: 0.4 + flatIdx * 0.04,
+                              ease: [0.2, 0.7, 0.3, 1],
+                            }}
+                          >
+                            <span className="skill-pill-dot" />
+                            {s}
+                          </motion.span>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           </motion.div>
 

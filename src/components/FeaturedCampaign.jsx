@@ -1,50 +1,71 @@
 import { motion } from 'framer-motion'
-import SpotlightReveal from './SpotlightReveal.jsx'
-// OPPO Reno launch creative (still) revealed over brand motion footage.
+// OPPO Reno launch creative — the flagship featured campaign.
 import campaignStill from '../assets/GDIMAGE/15.webp'
-import campaignMotion from '../assets/Investor_Deck_0.mp4'
+
+// Campaign spec sheet (sourced from CV — no device names repeated from the subtitle).
+const SPECS = [
+  ['Role', 'On-Camera Brand Talent'],
+  ['Reach', 'Millions · Social'],
+  ['Format', 'Launch Campaign'],
+  ['Period', '2024 — 2025'],
+]
+
+const TAGS = ['On-Camera Talent', '5G Launch', 'Social Reach', 'OPPO Kenya']
 
 export default function FeaturedCampaign() {
   const reveal = (delay = 0) => ({
-    initial: { y: 24, opacity: 0, filter: 'blur(8px)' },
+    initial: { y: 28, opacity: 0, filter: 'blur(8px)' },
     whileInView: { y: 0, opacity: 1, filter: 'blur(0px)' },
-    viewport: { once: true, margin: '-80px' },
+    viewport: { once: true, margin: '-90px' },
     transition: { duration: 0.85, delay, ease: [0.2, 0.7, 0.3, 1] },
   })
 
   return (
     <section className="fc" id="campaign">
-      <SpotlightReveal imageSrc={campaignStill} videoSrc={campaignMotion} />
+      {/* Cinematic background — slow Ken-Burns drift + light sweep (pure CSS motion) */}
+      <div className="fc-bg" aria-hidden>
+        <img className="fc-bg-img" src={campaignStill} alt="" />
+        <div className="fc-vignette" />
+        <div className="fc-sweep" />
+      </div>
 
-      <div className="fc-gradient" />
-
-      <div className="fc-overlay">
-        <motion.div className="fc-eyebrow" {...reveal(0)}>
-          <span className="fc-eyebrow-line" />
-          Featured Campaign
+      <div className="fc-inner">
+        <motion.div className="fc-top" {...reveal(0)}>
+          <span className="fc-eyebrow">
+            <span className="fc-eyebrow-line" />
+            Featured Campaign
+          </span>
+          <span className="fc-counter">01&nbsp;/&nbsp;01</span>
         </motion.div>
 
-        <motion.div className="fc-brand-row" {...reveal(0.1)}>
-          <span className="fc-brand">OPPO Kenya</span>
-          <span className="fc-dot">·</span>
-          <span className="fc-brand-sub">Live Campaign</span>
-          <span className="fc-dot">·</span>
-          <span className="fc-brand-sub">2024–2025</span>
-        </motion.div>
+        <motion.h2 className="fc-title" {...reveal(0.08)}>
+          OPPO <em>Kenya</em>
+        </motion.h2>
 
-        <motion.h3 className="fc-title" {...reveal(0.18)}>
-          Reno14 &amp; A5 Pro 5G<br />Launch Campaigns
-        </motion.h3>
-
-        <motion.p className="fc-desc" {...reveal(0.26)}>
-          Featured as on-camera brand talent and creative contributor for OPPO Kenya's
-          smartphone launch campaigns — reaching millions across social media platforms.
+        <motion.p className="fc-subtitle" {...reveal(0.14)}>
+          Reno14 &amp; A5 Pro 5G — Launch Campaigns
         </motion.p>
 
-        <motion.a className="fc-cta" href="#work" {...reveal(0.32)}>
-          View Campaign
-          <span className="fc-cta-arrow">→</span>
-        </motion.a>
+        <motion.p className="fc-desc" {...reveal(0.2)}>
+          Selected as on-camera brand talent for OPPO Kenya's flagship smartphone launches —
+          the Reno14 (July 2025) and A5 Pro 5G (April 2025) — appearing in campaign creative
+          that reached millions across social platforms.
+        </motion.p>
+
+        <motion.div className="fc-specs" {...reveal(0.26)}>
+          {SPECS.map(([label, value]) => (
+            <div className="fc-spec" key={label}>
+              <span className="fc-spec-l">{label}</span>
+              <span className="fc-spec-v">{value}</span>
+            </div>
+          ))}
+        </motion.div>
+
+        <motion.div className="fc-tags" {...reveal(0.32)}>
+          {TAGS.map((t) => (
+            <span className="fc-tag" key={t}>{t}</span>
+          ))}
+        </motion.div>
       </div>
     </section>
   )

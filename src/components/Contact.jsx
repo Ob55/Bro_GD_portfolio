@@ -3,9 +3,8 @@ import { motion } from 'framer-motion'
 const EMAIL = 'businesswithalvin55@gmail.com'
 
 const SOCIALS = [
-  { label: 'Instagram', href: 'https://instagram.com/' },
-  { label: 'LinkedIn', href: 'https://linkedin.com/' },
-  { label: 'WhatsApp', href: 'https://wa.me/' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/alvin-kyalo-b94159317' },
+  { label: 'WhatsApp', href: 'https://wa.me/254100127461' },
 ]
 
 export default function Contact() {
