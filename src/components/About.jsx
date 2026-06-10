@@ -10,22 +10,30 @@ const SKILLS = [
 
 export default function About() {
   const sectionRef = useRef(null)
-  const [scrollY, setScrollY] = useState(0)
+  const bgTextRef = useRef(null)
   const [highlightIdx, setHighlightIdx] = useState(0)
 
-  // Parallax bg + portrait drift
+  // Parallax bg drift — write the transform directly via a ref, rAF-batched,
+  // so scrolling never triggers a React re-render (keeps INP low).
   useEffect(() => {
-    const onScroll = () => {
+    let frame = 0
+    const update = () => {
+      frame = 0
       const el = sectionRef.current
-      if (!el) return
+      const bg = bgTextRef.current
+      if (!el || !bg) return
       const rect = el.getBoundingClientRect()
       const vh = window.innerHeight
-      const centered = (vh - rect.top) / (vh + rect.height)
-      setScrollY(Math.min(Math.max(centered, 0), 1))
+      const centered = Math.min(Math.max((vh - rect.top) / (vh + rect.height), 0), 1)
+      bg.style.transform = `translate(${(centered - 0.5) * 80}px, 0)`
     }
-    onScroll()
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(update) }
+    update()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (frame) cancelAnimationFrame(frame)
+    }
   }, [])
 
   // Auto-cycling skill highlight
@@ -41,15 +49,9 @@ export default function About() {
     transition: { duration: 0.85, delay, ease: [0.2, 0.7, 0.3, 1] },
   })
 
-  const bgShift = (scrollY - 0.5) * 80
-  const portraitShift = (scrollY - 0.5) * -40
-
   return (
     <section className="about" id="about" ref={sectionRef}>
-      <div
-        className="about-bg-text"
-        style={{ transform: `translate(${bgShift}px, 0)` }}
-      >
+      <div className="about-bg-text" ref={bgTextRef}>
         ALVIN
       </div>
       <div className="about-blob about-blob-a" />
@@ -64,7 +66,6 @@ export default function About() {
         <motion.div
           className="about-portrait-wrap"
           {...reveal(0.1)}
-          style={{ transform: `translateY(${portraitShift}px)` }}
         >
           <img className="about-portrait" src={portrait} alt="Alvin Kyalo" />
           <span className="about-sig">— Alvin Kyalo</span>

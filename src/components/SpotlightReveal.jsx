@@ -31,11 +31,18 @@ export default function SpotlightReveal({ imageSrc, videoSrc, baseRadius = 360 }
       targetX = -1000
       targetY = -1000
     }
-    wrap.addEventListener('mousemove', onMove)
+    wrap.addEventListener('mousemove', onMove, { passive: true })
     wrap.addEventListener('mouseleave', onLeave)
 
-    let raf
+    // Cache the trail circles once instead of querying the DOM every frame.
+    const circles = Array.from({ length: NUM_TRAILS }, (_, i) =>
+      wrap.querySelector(`#sr-trail-${i}`)
+    )
+
+    let raf = 0
+    let running = false
     const animate = () => {
+      if (!running) return
       const pts = pointsRef.current
       pts[0].x += (targetX - pts[0].x) * 0.2
       pts[0].y += (targetY - pts[0].y) * 0.2
@@ -44,19 +51,33 @@ export default function SpotlightReveal({ imageSrc, videoSrc, baseRadius = 360 }
         pts[i].y += (pts[i - 1].y - pts[i].y) * 0.35
       }
       for (let i = 0; i < pts.length; i++) {
-        const c = document.getElementById(`sr-trail-${i}`)
-        if (c) {
-          c.setAttribute('cx', pts[i].x)
-          c.setAttribute('cy', pts[i].y)
+        if (circles[i]) {
+          circles[i].setAttribute('cx', pts[i].x)
+          circles[i].setAttribute('cy', pts[i].y)
         }
       }
       raf = requestAnimationFrame(animate)
     }
-    animate()
+
+    // Only run the loop (and play the video) while the section is on-screen.
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        if (!running) { running = true; raf = requestAnimationFrame(animate) }
+        if (videoRef.current) videoRef.current.play().catch(() => {})
+      } else {
+        running = false
+        if (raf) cancelAnimationFrame(raf)
+        raf = 0
+        if (videoRef.current) videoRef.current.pause()
+      }
+    }, { threshold: 0.05 })
+    io.observe(wrap)
+
     return () => {
+      io.disconnect()
       wrap.removeEventListener('mousemove', onMove)
       wrap.removeEventListener('mouseleave', onLeave)
-      cancelAnimationFrame(raf)
+      if (raf) cancelAnimationFrame(raf)
     }
   }, [])
 

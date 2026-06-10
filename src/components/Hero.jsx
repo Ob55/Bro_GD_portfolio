@@ -33,30 +33,60 @@ function CountUp({ to, suffix = '', duration = 1400 }) {
 
 export default function Hero() {
   const ctaRef = useRef(null)
+  // Defer the decorative background video so it never blocks the LCP.
+  // The hero headline paints first; the video fades in once the page is idle.
+  const [showVideo, setShowVideo] = useState(false)
 
-  // Magnetic CTA effect
+  useEffect(() => {
+    let idleId
+    const start = () => {
+      if ('requestIdleCallback' in window) {
+        idleId = window.requestIdleCallback(() => setShowVideo(true), { timeout: 2500 })
+      } else {
+        idleId = setTimeout(() => setShowVideo(true), 1200)
+      }
+    }
+    // Wait for full load so critical content paints first.
+    if (document.readyState === 'complete') start()
+    else window.addEventListener('load', start, { once: true })
+    return () => {
+      window.removeEventListener('load', start)
+      if (idleId && 'cancelIdleCallback' in window) window.cancelIdleCallback(idleId)
+      else clearTimeout(idleId)
+    }
+  }, [])
+
+  // Magnetic CTA effect — rAF-batched so pointer moves never block interactions.
   useEffect(() => {
     const el = ctaRef.current
     if (!el) return
-    const onMove = (e) => {
+    let frame = 0
+    let lastEvent = null
+    const apply = () => {
+      frame = 0
+      const e = lastEvent
+      if (!e) return
       const rect = el.getBoundingClientRect()
       const cx = rect.left + rect.width / 2
       const cy = rect.top + rect.height / 2
       const dx = e.clientX - cx
       const dy = e.clientY - cy
       const dist = Math.hypot(dx, dy)
-      if (dist < 140) {
-        el.style.transform = `translate(${dx * 0.18}px, ${dy * 0.18}px) scale(1.04)`
-      } else {
-        el.style.transform = ''
-      }
+      el.style.transform = dist < 140
+        ? `translate(${dx * 0.18}px, ${dy * 0.18}px) scale(1.04)`
+        : ''
+    }
+    const onMove = (e) => {
+      lastEvent = e
+      if (!frame) frame = requestAnimationFrame(apply)
     }
     const onLeave = () => { el.style.transform = '' }
-    window.addEventListener('mousemove', onMove)
+    window.addEventListener('mousemove', onMove, { passive: true })
     el.addEventListener('mouseleave', onLeave)
     return () => {
       window.removeEventListener('mousemove', onMove)
       el.removeEventListener('mouseleave', onLeave)
+      if (frame) cancelAnimationFrame(frame)
     }
   }, [])
 
@@ -68,15 +98,18 @@ export default function Hero() {
 
   return (
     <section className="hero" id="hero">
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none z-0 opacity-20 scale-105"
-        style={{ filter: 'grayscale(100%) contrast(1.15) brightness(0.65)' }}
-        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260207_050933_33e2620d-09cd-43a2-80ef-4cdbb42f4194.mp4"
-      />
+      {showVideo && (
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="none"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none z-0 opacity-20 scale-105 hero-video-fade"
+          style={{ filter: 'grayscale(100%) contrast(1.15) brightness(0.65)' }}
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260207_050933_33e2620d-09cd-43a2-80ef-4cdbb42f4194.mp4"
+        />
+      )}
       <motion.div
         className="hero-bg-text"
         initial={{ opacity: 0.18, x: -30 }}
