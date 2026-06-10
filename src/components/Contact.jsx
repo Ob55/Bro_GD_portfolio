@@ -42,7 +42,7 @@ export default function Contact() {
           Send a Message
           <span className="btn-arrow">↗</span>
         </a>
-        <a className="btn btn-outline" href="/alvinCV.docx" download="Alvin-Kyalo-CV.docx">Download CV</a>
+        <a className="btn btn-outline" href="/alvinCV.docx" download="Alvin-Kyalo-Resume.docx">Download Resume</a>
       </motion.div>
 
       <motion.div className="contact-socials" {...reveal(0.36)}>

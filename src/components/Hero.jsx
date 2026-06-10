@@ -158,7 +158,7 @@ export default function Hero() {
             Explore Work
             <span className="btn-arrow">↗</span>
           </a>
-          <a href="/alvinCV.docx" download="Alvin-Kyalo-CV.docx" className="btn btn-outline">Download CV</a>
+          <a href="/alvinCV.docx" download="Alvin-Kyalo-Resume.docx" className="btn btn-outline">Download Resume</a>
         </motion.div>
       </div>
 

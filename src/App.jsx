@@ -4,7 +4,6 @@ import Nav from './components/Nav.jsx'
 import Hero from './components/Hero.jsx'
 import About from './components/About.jsx'
 import ScrollWords from './components/ScrollWords.jsx'
-import FeaturedCampaign from './components/FeaturedCampaign.jsx'
 import Works from './components/Works.jsx'
 import Capabilities from './components/Capabilities.jsx'
 import Experience from './components/Experience.jsx'
@@ -23,7 +22,6 @@ export default function App() {
         <Hero />
         <About />
         <ScrollWords />
-        <FeaturedCampaign />
         <Works />
         <Capabilities />
         <Experience />

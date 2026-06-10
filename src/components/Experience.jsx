@@ -1,15 +1,22 @@
 import { motion } from 'framer-motion'
 
-// Career timeline from CV — the OPPO campaign is intentionally left to the
-// Featured Campaign section above, so nothing repeats here.
+// Career timeline from CV.
 const ROLES = [
   {
-    role: 'Business Analyst',
-    org: 'Turing',
+    role: 'Brand Model / Talent',
+    org: 'OPPO Kenya',
+    place: 'Nairobi, Kenya',
+    period: '2024 — 25',
+    note: 'On-camera brand talent in the Reno14 (July 2025) and A5 Pro 5G (April 2025) smartphone launch campaigns — appearing in creative that reached millions across social media.',
+    tags: ['On-Camera Talent', 'Reno14 & A5 Pro 5G', 'Millions Reach'],
+  },
+  {
+    role: 'Social Media Manager & Designer',
+    org: 'Freelance',
     place: 'Remote',
-    period: '2026',
-    note: 'AI model evaluation & quality assessment — side-by-side output grading, fact-checking, and clear, structured justifications.',
-    tags: ['AI Evaluation', 'Quality Assessment'],
+    period: '2023 — 24',
+    note: 'On-brand graphics, carousels and ad creative in Canva Pro; Reels & Shorts in CapCut. Owned visual identity end-to-end — strong creative driving 3–5× ROAS.',
+    tags: ['Canva Pro', 'CapCut', '3–5× ROAS'],
   },
   {
     role: 'AI Automation Designer',
@@ -20,20 +27,20 @@ const ROLES = [
     tags: ['n8n', 'AI UGC', '25+ Workflows'],
   },
   {
+    role: 'Business Analyst',
+    org: 'Turing',
+    place: 'Remote',
+    period: '2026',
+    note: 'AI model evaluation & quality assessment — side-by-side output grading, fact-checking, and clear, structured justifications.',
+    tags: ['AI Evaluation', 'Quality Assessment'],
+  },
+  {
     role: 'Software Tester',
     org: 'uTest',
     place: 'Remote',
     period: '2024 — 25',
     note: 'Uncovered 120+ defects across 15+ web & mobile projects; verified 99.8% device/OS compatibility and 100% payment-gateway success.',
     tags: ['QA', '120+ Defects'],
-  },
-  {
-    role: 'Social Media Manager & Designer',
-    org: 'Freelance',
-    place: 'Remote',
-    period: '2023 — 24',
-    note: 'On-brand graphics, carousels and ad creative in Canva Pro; Reels & Shorts in CapCut. Owned visual identity end-to-end — strong creative driving 3–5× ROAS.',
-    tags: ['Canva Pro', 'CapCut', '3–5× ROAS'],
   },
 ]
 
@@ -77,11 +84,17 @@ export default function Experience() {
         ))}
       </div>
 
-      <motion.div className="exp-edu" {...reveal(0.4)}>
+      {/* Small dedicated Education block */}
+      <motion.div className="exp-edu" {...reveal(0.42)}>
         <span className="exp-edu-l">Education</span>
-        <span className="exp-edu-v">
-          Zetech University — Software Engineering / AI <span className="exp-edu-dim">· Nairobi · 2023–2025</span>
-        </span>
+        <div className="exp-edu-body">
+          <span className="exp-edu-v">Zetech University — Software Engineering / AI</span>
+          <span className="exp-edu-meta">Nairobi · 2023 – 2025</span>
+          <p className="exp-edu-note">
+            Coursework across full-stack web development (HTML, CSS, JavaScript, Python, PHP, SQL),
+            database systems, algorithms, software testing, and AI / machine learning.
+          </p>
+        </div>
       </motion.div>
     </section>
   )
