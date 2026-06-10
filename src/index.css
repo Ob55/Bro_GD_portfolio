@@ -293,6 +293,18 @@ img, video { display: block; max-width: 100%; }
   pointer-events: none;
   text-shadow: 0 0 18px rgba(201, 163, 122, 0.3);
 }
+/* On phones the floating accent collides with the (full-width, wrapping) name,
+   so let it flow normally just beneath the name instead. */
+@media (max-width: 640px) {
+  .cursive-accent {
+    position: static;
+    transform: rotate(-4deg);
+    font-size: 1.4rem;
+    margin-top: 0.5rem;
+    margin-left: 0.1rem;
+    mix-blend-mode: normal;
+  }
+}
 
 .hero-meta {
   margin-top: 2.5rem;
@@ -1212,7 +1224,7 @@ img, video { display: block; max-width: 100%; }
   grid-template-columns: repeat(2, 1fr);
   border-top: 1px solid var(--stroke);
   border-bottom: 1px solid var(--stroke);
-  background: rgba(10, 8, 5, 0.4);
+  background: rgba(7, 11, 20, 0.92);
   backdrop-filter: blur(6px);
   margin: 0 -2.5rem;
 }
@@ -1220,6 +1232,7 @@ img, video { display: block; max-width: 100%; }
   padding: 1.4rem 1.5rem;
   display: flex; flex-direction: column;
   gap: 0.35rem;
+  min-width: 0;
   border-right: 1px solid var(--stroke);
 }
 .about-strip-item:nth-child(2n) { border-right: none; }
@@ -1242,6 +1255,8 @@ img, video { display: block; max-width: 100%; }
   font-style: italic;
   font-size: clamp(1.05rem, 1.6vw, 1.4rem);
   color: var(--text);
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 @media (max-width: 900px) {
@@ -1249,6 +1264,19 @@ img, video { display: block; max-width: 100%; }
   .about-strip { margin: 0 -1.25rem; }
   .about-portrait-wrap { margin-bottom: 1rem; }
   .about-sig { bottom: -1.5rem; }
+  /* Smaller, less overwhelming watermark on mobile so it never reads as
+     overlapping text behind the content. */
+  .about-bg-text { font-size: clamp(7rem, 30vw, 16rem); opacity: 0.1; }
+}
+/* Very narrow phones: stack the meta strip to a single column so long values
+   (e.g. "Social Media & Brand Creative") never collide. */
+@media (max-width: 560px) {
+  .about-strip { grid-template-columns: 1fr; }
+  .about-strip-item {
+    border-right: none;
+    border-bottom: 1px solid var(--stroke);
+  }
+  .about-strip-item:last-child { border-bottom: none; }
 }
 
 /* ============ CAPABILITIES (auto tabs) ============ */
@@ -1456,8 +1484,18 @@ img, video { display: block; max-width: 100%; }
   .scroll-words, .cap { padding-left: 1.25rem; padding-right: 1.25rem; }
 
   .footer { padding: 1.5rem 1.25rem; }
-  .scroll-indicator { left: 1.25rem; }
+  /* The stats strip wraps to a 2x2 grid on mobile and fills the bottom of the
+     hero, where the absolutely-positioned scroll cue is pinned — they collide
+     (the cue overprints "Clients / Served"). Hide the decorative cue here. */
+  .scroll-indicator { display: none; }
   .stat-cell { padding: 1.5rem 1.25rem; }
+}
+
+/* Narrow phones: stack capability spec rows so the label and a long value
+   (e.g. "Posts · Carousels · Stories · Reels") never collide on one line. */
+@media (max-width: 560px) {
+  .cap-panel-list-row { flex-direction: column; align-items: flex-start; gap: 0.3rem; }
+  .cap-panel-list-row .v { text-align: left; }
 }
 
 /* ============ BLUEPRINT REDESIGN ADDITIONS ============ */
@@ -1824,13 +1862,16 @@ img, video { display: block; max-width: 100%; }
 }
 .contact-email {
   display: inline-block;
+  max-width: 100%;
   font-family: var(--font-display);
   font-style: italic;
-  font-size: clamp(1.4rem, 3.5vw, 2.4rem);
+  font-size: clamp(1.15rem, 3.5vw, 2.4rem);
   color: var(--text);
   margin-bottom: 2.5rem;
   position: relative; z-index: 1;
   transition: color 0.3s;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 .contact-email:hover { color: var(--brown-accent); }
 .contact-ctas {
